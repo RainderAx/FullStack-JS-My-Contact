@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 // route test
-app.get("/", (req, res) => res.send("API OK 🚀"));
+app.get("/", (req, res) => res.send(""));
 
 // Exemple : ajouter un utilisateur
 app.post("/users", async (req, res) => {
@@ -41,6 +41,6 @@ app.get("/users", async (req, res) => {
 // Lancer le serveur après connexion à la DB
 connectDB().then(() => {
   app.listen(process.env.PORT, () =>
-    console.log(`🚀 Serveur sur http://localhost:${process.env.PORT}`)
+    console.log(`http://localhost:${process.env.PORT}`)
   );
 });

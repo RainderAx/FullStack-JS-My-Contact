@@ -9,13 +9,18 @@ dotenv.config(); // Toujours avant d'utiliser les variables d'environnement
 
 const requireAuth = require('./middlewares/auth.middleware');
 
+const { swaggerUi, swaggerSpec } = require('./swagger');
+
 app.use(express.json());
 app.use(cors());
 
 connectDB();
 
 // route test
-app.get("/", (req, res) => res.send(""));
+app.get("/", (req, res) => res.send("Hello World!"));
+// swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 // user routes
 const userRoutes = require('./views/userRoutes');
@@ -23,6 +28,8 @@ app.use('/auth', userRoutes);
 app.get('/profil', requireAuth, (req, res) => {
     res.json({ message: 'Route protégée', user: req.user });
 });
+
+
 
 // Lancer le serveur
 const PORT = process.env.PORT || 3000;

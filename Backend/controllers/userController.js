@@ -1,7 +1,5 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const express = require('express');
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_URI, {

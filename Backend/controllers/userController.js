@@ -22,31 +22,30 @@ const hashPassword = async (password) => {
     }
 };
 
-const userController = {
-    register: async (req, res) => {
-        const { email, password } = req.body;
-        try {
-            const existingUser = await User.findOne({ email })
-                .exec();
-            if (existingUser) {
-                return res
-                    .status(400)
-                    .json({ message: 'Email déjà utilisé' });
-            }
-            const hashedPassword = await hashPassword(password);
-            const newUser = new User({
-                email,
-                password: hashedPassword,
-            });
-            await newUser.save();
-            res.status(201).json({ message: 'Utilisateur enregistré avec succès' });
-        } catch (error) {
-            console.error('Erreur lors de l\'enregistrement de l\'utilisateur :', error);
-            res.status(500).json({ message: 'Erreur serveur' });
+
+async function register(req, res) {
+    const { email, password } = req.body;
+    try {
+        const existingUser = await User.findOne({ email })
+            .exec();
+        if (existingUser) {
+            return res
+                .status(400)
+                .json({ message: 'Email déjà utilisé' });
         }
-    },
+        const hashedPassword = await hashPassword(password);
+        const newUser = new User({
+            email,
+            password: hashedPassword,
+        });
+        await newUser.save();
+        res.status(201).json({ message: 'Utilisateur enregistré avec succès' });
+    } catch (error) {
+        console.error('Erreur lors de l\'enregistrement de l\'utilisateur :', error);
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+}
 
-
+module.exports = {
+    register
 };
-
-module.exports = userController;

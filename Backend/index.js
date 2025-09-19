@@ -1,6 +1,7 @@
 "use strict";
 const express = require("express");
 const app = express();
+const { connectDB } = require("./db");
 
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -9,12 +10,7 @@ dotenv.config(); // Toujours avant d'utiliser les variables d'environnement
 app.use(express.json());
 app.use(cors());
 
-const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGO_URI, {
-    dbName: process.env.DB_NAME,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+connectDB();
 
 // route test
 app.get("/", (req, res) => res.send(""));

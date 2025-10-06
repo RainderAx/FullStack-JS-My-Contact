@@ -118,9 +118,25 @@ async function updateContact(req, res) {
     }
 }
 
+async function deleteContact(req, res) {
+    const { contactId } = req.params;
+    const userId = req.user.id;
+
+    try {
+        const contact = await Contact.findOneAndDelete({ _id: contactId, user: userId });
+
+        if (!contact) {
+            return res.status(404).json({ message: 'Contact non trouvé' });
+        }
+        res.status(200).json({ message: 'Contact supprimé' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+}
+
 module.exports = {
     addContact,
     getContact,
-    updateContact
-
+    updateContact,
+    deleteContact
 };

@@ -1,6 +1,1 @@
 commencer le back par mongo atlas cloud
-{
-    "lastName": "jOla",
-    "firstName" : "green",
-    "phoneNumber" : "0621212121"
-}

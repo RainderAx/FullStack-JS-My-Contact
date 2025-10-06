@@ -1,7 +1,1 @@
-faire 2 terminales un pour le back et un pour le front
-numéro de téléphone = > chaine de caractère
-photo.png optionelle
 
-librairie bcrypt pour hasher les mots de pass
-
-CORS sur le backend

@@ -98,9 +98,29 @@ async function getContact(req, res) {
     }
 }
 
+async function updateContact(req, res) {
+    const { contactId } = req.params;
+    const userId = req.user.id;
+    const { firstName, lastName, phoneNumber } = req.body;
+
+    try {
+        const contact = await Contact.findOneAndUpdate(
+            { _id: contactId, user: userId },
+            { firstName, lastName, phoneNumber },
+            { new: true }
+        );
+        if (!contact) {
+            return res.status(404).json({ message: 'Contact non trouvé' });
+        }
+        res.status(200).json({ message: 'Contact mis à jour' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+}
 
 module.exports = {
     addContact,
-    getContact
+    getContact,
+    updateContact
 
 };

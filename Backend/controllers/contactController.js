@@ -83,9 +83,22 @@ async function addContact(req, res) {
     }
 }
 
+async function getContact(req, res) {
+    try {
+        const userId = req.user.id;
+        const contacts = await Contact.find({ user: userId });
+        res.status(200).json({ contacts });
+
+
+    } catch (error) {
+        console.error("Erreur lors de la récupération des contacts", error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+}
 
 
 module.exports = {
     addContact,
+    getContact
 
 };

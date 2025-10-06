@@ -33,12 +33,6 @@ app.get('/profil', requireAuth, (req, res) => {
 const contactRoutes = require('./views/contactRoutes');
 app.use('/auth', requireAuth, contactRoutes);
 
-// Récupérer les contacts de l'utilisateur connecté
-app.get('/addContact', async (req, res) => {
-    res.json({ message: 'Route protégée', user: req.user });
-});
-
-
 
 // Lancer le serveur
 const PORT = process.env.PORT || 3000;

@@ -84,9 +84,11 @@ async function addContact(req, res) {
 }
 
 async function getContact(req, res) {
+
     try {
         const userId = req.user.id;
-        const contacts = await Contact.find({ user: userId });
+        const contacts = await Contact.find({ user: userId })
+            .select('firstName lastName phoneNumber');
         res.status(200).json({ contacts });
 
 

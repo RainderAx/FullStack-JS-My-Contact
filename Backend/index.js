@@ -29,6 +29,18 @@ app.get('/profil', requireAuth, (req, res) => {
     res.json({ message: 'Route protégée', user: req.user });
 });
 
+//Contact routes
+const userContact = require('./views/contactRoutes');
+app.get('/contact', async (req, res) => {
+    try {
+        const contacts = await userContact.getContacts(req.user?.id);
+        res.json(contacts);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des contacts:", error);
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+});
+
 
 
 // Lancer le serveur

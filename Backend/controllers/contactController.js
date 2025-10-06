@@ -1,5 +1,6 @@
 const Contact = require('../models/Contact');
 const mongoose = require('mongoose');
+const User = require('../models/User');
 
 mongoose.connect(process.env.MONGO_URI, {
     dbName: process.env.DB_NAME,
@@ -10,6 +11,7 @@ mongoose.connect(process.env.MONGO_URI, {
 async function upperLastName(lastName) {
     try {
         const str = lastName.toUpperCase();
+        console.log("str:", str);
         return str;
     } catch (error) {
         console.error("le nom n'a pas été mis en majuscule");
@@ -35,6 +37,7 @@ async function verifyNumber(str, res) {
 async function upperFirstName(firstName) {
     try {
         const str = firstName.toLowerCase();
+        console.log("str:", str);
         return str.charAt(0).toUpperCase() + str.slice(1);
     } catch (error) {
         console.error("le prénom n'a pas été mis en majuscule");
@@ -43,26 +46,46 @@ async function upperFirstName(firstName) {
 }
 
 async function addContact(req, res) {
+    console.log("Ajout d'un contact");
+    console.log("req.body:", req.body);
     const { firstName, lastName, phoneNumber } = req.body;
-    const userId = req.user._id;
+    console.log("req.user:", req.user);
+    const userId = req.user.id;
+
     try {
         const Capitale = await upperFirstName(firstName);
         const UpperName = await upperLastName(lastName);
         await verifyNumber(phoneNumber, res);
+        console.log("USER:", req.user);
+        console.log("userId:", userId);
 
         const newContact = new Contact({
             firstName: Capitale,
             lastName: UpperName,
             phoneNumber,
-            userId: userId
+            user: userId
+
         });
+
         await newContact.save();
+
         res.status(201).json({ message: 'Contact ajouté avec succès', contact: newContact });
+
     } catch (error) {
         console.error("Erreur lors de l'ajout du contact", error);
-        res.status(500).json({ message: 'Erreur serveur' });
+        res.status(500).json({
+            message: 'Erreur serveur',
+            userId: userId,
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber
+        });
     }
 }
+
+
+
 module.exports = {
-    addContact
+    addContact,
+
 };

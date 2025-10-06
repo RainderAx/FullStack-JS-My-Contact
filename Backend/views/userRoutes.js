@@ -8,6 +8,8 @@ const { login } = require('../controllers/userController');
  * /api/register:
  *   post:
  *     summary: Inscription d'un utilisateur
+ *     tags:
+ *       - Users
  *     requestBody:
  *       required: true
  *       content:
@@ -32,6 +34,8 @@ router.post('/register', register);
  * /api/login:
  *   post:
  *     summary: Connexion d'un utilisateur
+ *     tags:
+ *       - Users
  *     requestBody:
  *       required: true
  *       content:

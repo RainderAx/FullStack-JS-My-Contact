@@ -1,57 +1,39 @@
-import { useState } from 'react'
-import './App.css'
-import axios from "axios"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './page/Login.jsx';
+import Register from './page/Register.jsx';
+import HomePage from './page/HomePage.jsx';
+// import PrivateRoute from './page/PrivateRoute.jsx';
+// import Dashboard from './page/DashBoard.jsx';
+
+import React from 'react';
+
+import './App.css';
 
 function App() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+    return (
+        <>
+            <Router>
 
-  const handleSubmit = e => {
-    e.preventDefault()
+                <div>
 
-    axios
-      .post("http://localhost:5000/auth/register", { email, password })
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  }
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
 
-  return (
-    <div>
-      <form id="register" onSubmit={handleSubmit}>
-        <h1>Register</h1>
 
-        <p className="item">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </p>
+                        {/* <Route path="/dashboard" element={<PrivateRoute>
+                            <Dashboard />
+                        </PrivateRoute>} /> */}
 
-        <p className="item">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </p>
+                    </Routes>
+                </div>
 
-        <p className="item">
-          <input type="submit" value="Register" />
-        </p>
-      </form>
-    </div>
-  )
+            </Router>
+
+        </>
+    );
 }
 
-export default App
+export default App;
+

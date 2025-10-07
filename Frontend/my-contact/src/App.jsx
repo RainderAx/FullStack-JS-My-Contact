@@ -1,11 +1,9 @@
+import React from 'react';
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './page/Login.jsx';
 import Register from './page/Register.jsx';
 import HomePage from './page/HomePage.jsx';
-// import PrivateRoute from './page/PrivateRoute.jsx';
-// import Dashboard from './page/DashBoard.jsx';
-
-import React from 'react';
 
 import './App.css';
 
@@ -20,12 +18,6 @@ function App() {
                         <Route path="/" element={<HomePage />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
-
-
-                        {/* <Route path="/dashboard" element={<PrivateRoute>
-                            <Dashboard />
-                        </PrivateRoute>} /> */}
-
                     </Routes>
                 </div>
 
@@ -36,4 +28,3 @@ function App() {
 }
 
 export default App;
-
